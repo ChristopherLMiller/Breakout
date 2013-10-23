@@ -3,6 +3,7 @@
 
 #include "Block.h"
 #include "Config.h"
+#include "tinyxml2.h"
 #include <vector>
 #include <fstream>
 #include <iostream>
@@ -20,8 +21,8 @@ private:
 public:
 	// constructors
 	Level();
-	Level(std::string filename);
 
+	bool load(std::string filename);
 	int getNumBlocks();
 	string getLevelName();
 };
