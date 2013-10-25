@@ -46,14 +46,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// test code for now
 		Level level = Level();
-		level.load("level1.xml");
-
-		log.info("Level name: " + level.getLevelName());
+		if (level.load("Assets/Levels/level1.xml")) {
+			log.info("Level name: " + level.getLevelName());
+		}
 	}
 	else {
 		log.error("Failed to create window, terminating");
 	}
-	
+
 	// create visual way to tell program execution has ended in log file
 	log.info("Program execution terminating");
 	log.info("-----------------------------");

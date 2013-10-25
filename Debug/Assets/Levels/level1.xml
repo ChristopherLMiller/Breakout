@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<level>
+    <levelName>Test Level</levelName>
+    <blocks>
+        <block x='0' y='0' width='15' height='5'>
+            <texture>block.png</texture>
+        </block>
+    </blocks>
+</level>

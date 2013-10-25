@@ -13,6 +13,14 @@ std::string toString(bool value)
 		return "false";
 }
 
+// Function: toString(const char*)
+// Purpose: convert c-style char array to string
+// Inputs: const char* value - char array to convert
+// Outputs: std::string - value as string
+std::string toString(const char* value) {
+	return std::string(value, strlen(value));
+}
+
 // Function: GetDesktopResolution(int &, int &)
 // Purpose: get the desktop resolution
 // Inputs: int horizontal - horizontal resolution

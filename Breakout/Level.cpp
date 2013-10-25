@@ -1,20 +1,29 @@
 #include "Level.h"
 
 Level::Level() {
-	// TODO: not sure how to handle this yet, if at all....
+	m_log = Logger();
 }
 
 bool Level::load(std::string fileName) {
 	tinyxml2::XMLDocument doc;
 	if (doc.LoadFile(fileName.c_str()) != tinyxml2::XML_ERROR_FILE_NOT_FOUND) {
-		const char* temp = doc.FirstChildElement("level")->FirstChildElement("levelName")->GetText();
-		levelName = std::string(temp, 255);
-		return true;
+		if (!NULL && doc.FirstChildElement("level")) {
+			if (!NULL && doc.FirstChildElement("level")->FirstChildElement("levelName")) {
+				m_levelName = toString(doc.FirstChildElement("level")->FirstChildElement("levelName")->GetText());
+				return true;
+			}
+			else {
+				m_log.error("Unable to find element 'levelName' in file: " + fileName);
+				return false;
+			}
+		}
+		else {
+			m_log.error("Unable to find element 'level' in file:  " + fileName);
+			return false;
+		}
 	}
 	else {
-		// document didn't load for whatever reason, warn and return
-		Logger log = Logger();
-		log.error("Unable to load file: " + fileName);
+		m_log.error("Unable to load file: " + fileName);
 		return false;
 	}
 
@@ -22,9 +31,9 @@ bool Level::load(std::string fileName) {
 
 }
 int Level::getNumBlocks() {
-	return numBlocks;
+	return m_numBlocks;
 }
 
 string Level::getLevelName() {
-	return levelName;
+	return m_levelName;
 }
