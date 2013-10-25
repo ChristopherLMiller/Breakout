@@ -9,7 +9,13 @@ bool Level::load(std::string fileName) {
 	if (doc.LoadFile(fileName.c_str()) != tinyxml2::XML_ERROR_FILE_NOT_FOUND) {
 		if (!NULL && doc.FirstChildElement("level")) {
 			if (!NULL && doc.FirstChildElement("level")->FirstChildElement("levelName")) {
+				// store the level name at this point
 				m_levelName = toString(doc.FirstChildElement("level")->FirstChildElement("levelName")->GetText());
+
+				// time to load the blocks!
+
+
+
 				return true;
 			}
 			else {
