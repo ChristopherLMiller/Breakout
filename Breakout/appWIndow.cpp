@@ -1,24 +1,35 @@
 #include "appWindow.h"
 #include "Logger.h"
 #include <Windows.h>
+#include <string>
 #include "wndproc.h"
 
-// Function: appWindow(HINSTANCE, int, int, int)
+// Function: appWindow(HINSTANCE, int, int, int, string)
 // Purpose: constructor - all arguments must be supplied
 // Inputs: HINSTANCE hInstance - handle to the window instance
 //		   int nCmdSHow - show the window
 //		   int width - width of the window
 //		   int height - height of the window
+//		   string windowMode - window mode for the window
 // Outputs: none
-appWindow::appWindow(HINSTANCE hInstance, int nCmdShow, int width, int height)
+appWindow::appWindow(HINSTANCE hInstance, int nCmdShow, int width, int height, std::string windowMode = "windowed")
 {
 	m_hInstance = hInstance;
 	m_nCmdShow = nCmdShow;
 	m_width = width;
 	m_height = height;
+	
+	// set window style based on the string provided
+	if (windowMode == "fullscreen" || windowMode == "borderless") {
+		m_windowStyle = WS_POPUP;
+	} else {
+		m_windowStyle = WS_EX_LAYERED | WS_EX_TOPMOST;
+	}
+
 	m_logger = Logger();
 	m_appWndProc = WndProc;
 }
+
 
 // Function: getWindowHandle()
 // Purpose: get the handle to the window
@@ -57,11 +68,11 @@ bool appWindow::createAppWindow()
 	}
 
 	// with instance registered, we can create the window
-	m_hMainWnd = CreateWindow(L"BasicWndClass", L"Win32Basic", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, m_width, m_height, 0, 0, m_hInstance, 0);
+	m_hMainWnd = CreateWindowEx(WS_EX_APPWINDOW, L"BasicWndClass", L"Win32Basic", m_windowStyle, CW_USEDEFAULT, CW_USEDEFAULT, m_width, m_height, 0, 0, m_hInstance, 0);
 
 	if (m_hMainWnd == 0) 
 	{
-		MessageBox(0, L"CreateWindow FAILED", 0, 0);
+		m_logger.error("Creation of window failed! Terminating");
 		return false;
 	}
 

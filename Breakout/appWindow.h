@@ -8,7 +8,7 @@
 class appWindow
 {
 public:
-	appWindow(HINSTANCE hInstance, int nCmdShow, int width, int height);
+	appWindow(HINSTANCE hInstance, int nCmdShow, int width, int height, std::string windowMode);
 	HWND getWindowHandle();
 	bool createAppWindow();
 	void setAppWindowText(LPCWSTR caption);
@@ -19,6 +19,7 @@ private:
 	HINSTANCE m_hInstance;
 	int m_nCmdShow;
 	int m_width, m_height;
+	DWORD m_windowStyle;
 	Logger m_logger;
 };
 #endif
